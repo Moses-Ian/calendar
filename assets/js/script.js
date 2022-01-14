@@ -2,7 +2,6 @@
 //================================================
 var currentDay = $("#currentDay");
 var timeContainer = $("#time-container");
-var taskContent;
 
 var tasks = [];
 
@@ -13,16 +12,20 @@ var tasks = [];
 function update() {
 	//display current day
 	currentDay.text(moment().format("dddd, MMMM Do"));
-	taskContent = $(".time-block");
+	var taskContent = $(".time-block");
+	
+	//update styling based on time
 	taskContent.each(function() {
+		//prepare the variables
 		var task = $(this).find(".task-container");
 		var timeContent = $(this).find(".time-content");
+		var time = moment(timeContent.text().trim(), "h a");
+		var minutesSinceTimeBlock = moment().diff(time, "minutes");
+
+		//remove old style
 		task.removeClass("bg-primary bg-secondary bg-success");
 		
-		var time = moment(timeContent.text().trim(), "h a");
-		
-		var minutesSinceTimeBlock = moment().diff(time, "minutes");
-		
+		//add new style
 		if (minutesSinceTimeBlock >= 60) {
 			task.addClass("bg-secondary");
 		} else if(minutesSinceTimeBlock >= 0) {
@@ -30,8 +33,6 @@ function update() {
 		} else {
 			task.addClass("bg-success");
 		}
-		
-		
 	});
 }
 
@@ -93,7 +94,6 @@ $("#time-container").on("click", "button", function () {
 
 loadTasks();
 
-
 //build the time blocks
 for(let i=9; i<=17; i++) {
 	
@@ -119,6 +119,50 @@ for(let i=9; i<=17; i++) {
 }
 
 update();
+
+//get the time until the next hour
+var now = moment();
+var nextHour = now.clone().minute(0).second(0).add(1, "hours");
+var timeLeft = nextHour.diff(now);
+//set a timeout to trigger on the next hour
+setTimeout(
+	function() {
+		//once the flat hour is hit, update...
+		update();
+		//and set a new interval to update every hour
+		setInterval(update, 3600000);	//60 minutes
+	}, 
+	timeLeft
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
