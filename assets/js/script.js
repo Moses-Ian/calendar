@@ -39,7 +39,14 @@ function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-
+function loadTasks() {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
+	if (!tasks) {
+		for(let i=0; i<=8; i++) {
+			tasks.push("default");
+		}
+	}
+}
 
 
 //attach listeners
@@ -84,10 +91,14 @@ $("#time-container").on("click", "button", function () {
 //main code
 //================================================
 
+loadTasks();
+
+
 //build the time blocks
 for(let i=9; i<=17; i++) {
-	var taskText = "default";
 	
+	var taskText = tasks[i-9];
+
 	var rowEl = $("<div>").addClass("time-block row border border-primary rounded").attr("order",i-9);
 	var timeEl = $("<div>").addClass("time-container col-1 border-right border-dark");	//I don't think this is quite how I want to do this
 		//-> I want to save the time as a variable I can compare to later
