@@ -20,8 +20,8 @@ function update() {
 		var task = $(this).find(".task-container");
 		var timeContent = $(this).find(".time-content");
 		var time = moment(timeContent.text().trim(), "h a");
-		// var minutesSinceTimeBlock = moment().diff(time, "minutes");
-		var minutesSinceTimeBlock = moment().set("hour", 12).diff(time, "minutes");		//use to check style
+		var minutesSinceTimeBlock = moment().diff(time, "minutes");
+		// var minutesSinceTimeBlock = moment().set("hour", 12).diff(time, "minutes");		//use to check style
 
 		//remove old style
 		task.removeClass("bg-primary bg-secondary bg-success");
