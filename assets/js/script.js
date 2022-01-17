@@ -20,20 +20,22 @@ function update() {
 		var task = $(this).find(".task-container");
 		var timeContent = $(this).find(".time-content");
 		var time = moment(timeContent.text().trim(), "h a");
-		var minutesSinceTimeBlock = moment().diff(time, "minutes");
+		// var minutesSinceTimeBlock = moment().diff(time, "minutes");
+		var minutesSinceTimeBlock = moment().set("hour", 12).diff(time, "minutes");
 
 		//remove old style
 		task.removeClass("bg-primary bg-secondary bg-success");
 		
 		//add new style
 		if (minutesSinceTimeBlock >= 60) {
-			task.addClass("bg-secondary");
+			task.addClass("past");
 		} else if(minutesSinceTimeBlock >= 0) {
-			task.addClass("bg-primary");
+			task.addClass("present");
 		} else {
-			task.addClass("bg-success");
+			task.addClass("future");
 		}
 	});
+	
 }
 
 function saveTasks() {
@@ -43,8 +45,9 @@ function saveTasks() {
 function loadTasks() {
   tasks = JSON.parse(localStorage.getItem("tasks"));
 	if (!tasks) {
+		tasks = [];
 		for(let i=0; i<=8; i++) {
-			tasks.push("default");
+			tasks.push("no task scheduled");
 		}
 	}
 }
@@ -99,13 +102,13 @@ for(let i=9; i<=17; i++) {
 	
 	var taskText = tasks[i-9];
 
-	var rowEl = $("<div>").addClass("time-block row border border-primary rounded").attr("order",i-9);
-	var timeEl = $("<div>").addClass("time-container col-1 border-right border-dark");	//I don't think this is quite how I want to do this
+	var rowEl = $("<div>").addClass("time-block row border border-2 border-primary rounded-3").attr("order",i-9);
+	var timeEl = $("<div>").addClass("time-container col-2 col-sm-2 col-md-2 col-lg-1 border-right border-dark text-center");	//I don't think this is quite how I want to do this
 		//-> I want to save the time as a variable I can compare to later
 	var pEl = $("<p>").addClass("time-content").text(moment().set("hour", i).format("h a"));
-	var taskEl = $("<div>").addClass("task-container col-10");
+	var taskEl = $("<div>").addClass("task-container col-8 col-sm-9 col-md-9 clo-lg-10");
 	var ppEl = $("<p>").addClass("task-content").text(taskText);
-	var saveBtn = $("<button>").addClass("save-button col-1 bg-info");
+	var saveBtn = $("<button>").addClass("save-button col-2 col-sm-1 col-md-1 bg-info");
 	var icon = $("<i>").addClass("fas fa-save fa-2x");
 	
 	timeEl.append(pEl);
