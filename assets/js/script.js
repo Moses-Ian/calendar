@@ -20,8 +20,8 @@ function update() {
 		var task = $(this).find(".task-container");
 		var timeContent = $(this).find(".time-content");
 		var time = moment(timeContent.text().trim(), "h a");
-		var minutesSinceTimeBlock = moment().diff(time, "minutes");
-		// var minutesSinceTimeBlock = moment().set("hour", 12).diff(time, "minutes");		//use to check style
+		// var minutesSinceTimeBlock = moment().diff(time, "minutes");
+		var minutesSinceTimeBlock = moment().set("hour", 12).diff(time, "minutes");		//use to check style
 
 		//remove old style
 		task.removeClass("bg-primary bg-secondary bg-success");
@@ -106,9 +106,9 @@ for(let i=9; i<=17; i++) {
 	var timeEl = $("<div>").addClass("time-container col-2 col-sm-2 col-md-2 col-lg-1 border-right border-dark text-center");	//I don't think this is quite how I want to do this
 		//-> I want to save the time as a variable I can compare to later
 	var pEl = $("<p>").addClass("time-content").text(moment().set("hour", i).format("h a"));
-	var taskEl = $("<div>").addClass("task-container col-8 col-sm-9 col-md-9 clo-lg-10");
+	var taskEl = $("<div>").addClass("task-container col-8 col-sm-9 col-md-9 col-lg-10");
 	var ppEl = $("<p>").addClass("task-content").text(taskText);
-	var saveBtn = $("<button>").addClass("save-button col-2 col-sm-1 col-md-1 bg-info");
+	var saveBtn = $("<button>").addClass("save-button col-2 col-sm-1 col-md-1 col-lg-1 bg-info");
 	var icon = $("<i>").addClass("fas fa-save fa-2x");
 	
 	timeEl.append(pEl);
