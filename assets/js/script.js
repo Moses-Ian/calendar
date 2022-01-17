@@ -63,7 +63,7 @@ $("#time-container").on("click", ".task-content", function () {
     .trim();
 	var textInput = $("<textarea>")	//create new
 		.addClass("form-control")
-		.val(text);
+		.attr("placeholder", text);
 	$(this).replaceWith(textInput);
 	textInput.trigger("focus");
 });
