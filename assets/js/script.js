@@ -74,7 +74,7 @@ $("#time-container").on("blur", "textarea", function () {
 
 	// get the textarea's current value/text
 	var text = $(this)
-		.val()
+		.attr("placeholder")
 		.trim();
 	
 	//swap the textarea with a pEl
